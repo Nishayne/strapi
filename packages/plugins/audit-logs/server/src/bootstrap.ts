@@ -44,13 +44,27 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
         recordId = String((result as any).id || (result as any).documentId || 'unknown');
       }
 
-      // Extract user info from context (if available)
-      const contextWithState = context as any;
-      const userId = contextWithState.state?.user?.id;
-      const userEmail = contextWithState.state?.user?.email;
-      const userAgent = contextWithState.request?.headers?.['user-agent'];
-      const ipAddress = contextWithState.request?.ip;
-      const locale = contextWithState.locale;
+      // Get request context (includes user info from HTTP request)
+      const requestContext = strapi.requestContext.get();
+      const user = requestContext?.state?.user;
+      const request = requestContext?.request;
+
+      // Extract user and request info (if available)
+      const userId = user?.id;
+      const userEmail = user?.email;
+      const userAgent = request?.headers?.['user-agent'];
+      const ipAddress = request?.ip;
+
+      // Debug logging
+      strapi.log.debug('🔍 Audit Log - Logging operation:', {
+        action,
+        contentType: uid,
+        recordId,
+        userId,
+        userEmail: userEmail ? '***' : undefined,
+        hasRequestContext: !!requestContext,
+        hasUser: !!user,
+      });
 
       await auditLogService.logOperation({
         action,
@@ -64,7 +78,6 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
         metadata: {
           userAgent,
           ipAddress,
-          locale,
         },
       });
     } catch (error) {
