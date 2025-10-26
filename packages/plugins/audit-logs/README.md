@@ -43,7 +43,7 @@ The plugin provides the following REST API endpoints:
 ### Get Audit Logs
 
 ```http
-GET /api/audit-logs
+GET /audit-logs/audit-logs
 ```
 
 **Query Parameters:**
@@ -60,19 +60,19 @@ GET /api/audit-logs
 **Example:**
 
 ```http
-GET /api/audit-logs?contentType=api::article.article&action=update&page=1&pageSize=10
+GET /audit-logs/audit-logs?contentType=api::article.article&action=update&page=1&pageSize=10
 ```
 
 ### Get Single Audit Log
 
 ```http
-GET /api/audit-logs/:id
+GET /audit-logs/audit-logs/:id
 ```
 
 ### Get Available Content Types
 
 ```http
-GET /api/audit-logs/content-types
+GET /audit-logs/audit-logs/content-types
 ```
 
 Returns a list of all content types that have audit logs.
@@ -80,7 +80,7 @@ Returns a list of all content types that have audit logs.
 ### Get Available Users
 
 ```http
-GET /api/audit-logs/users
+GET /audit-logs/audit-logs/users
 ```
 
 Returns a list of all users who have performed logged actions.
