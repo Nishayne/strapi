@@ -179,7 +179,7 @@ private getChangedFields(newData: any, result: any): string[] {
 
 The plugin provides a comprehensive REST API for accessing audit logs:
 
-#### GET /api/audit-logs
+#### GET /audit-logs/audit-logs
 Retrieves paginated audit logs with filtering options.
 
 **Query Parameters:**
@@ -223,13 +223,13 @@ Retrieves paginated audit logs with filtering options.
 }
 ```
 
-#### GET /api/audit-logs/:id
+#### GET /audit-logs/audit-logs/:id
 Retrieves a specific audit log entry.
 
-#### GET /api/audit-logs/content-types
+#### GET /audit-logs/audit-logs/content-types
 Returns available content types with audit logs.
 
-#### GET /api/audit-logs/users
+#### GET /audit-logs/audit-logs/users
 Returns users who have performed logged actions.
 
 ## Security Design
