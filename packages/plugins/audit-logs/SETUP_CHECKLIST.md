@@ -61,10 +61,10 @@ Look for these in the Strapi startup logs:
 
 ### 6. Test the Endpoint
 
-The endpoint should be at `/api/admin/audit-logs` (admin route):
+The endpoint should be at `/audit-logs/admin/audit-logs` (admin route):
 
 ```bash
-curl -X GET http://localhost:1337/api/admin/audit-logs \
+curl -X GET http://localhost:1337/audit-logs/admin/audit-logs \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -156,6 +156,6 @@ If routes aren't working, check the server/src/routes/index.ts file is correctly
    ```bash
    # Create content via admin panel or API
    # Then check audit logs
-   curl -X GET http://localhost:1337/api/admin/audit-logs \
+   curl -X GET http://localhost:1337/audit-logs/admin/audit-logs \
      -H "Authorization: Bearer YOUR_TOKEN"
    ```
