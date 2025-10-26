@@ -102,7 +102,7 @@ Replace `YOUR_JWT_TOKEN` with your actual token in the examples below.
 #### 1. Get All Audit Logs
 
 ```bash
-curl -X GET http://localhost:1337/api/audit-logs \
+curl -X GET http://localhost:1337/audit-logs/audit-logs \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -144,7 +144,7 @@ curl -X GET http://localhost:1337/api/audit-logs \
 #### 2. Filter by Content Type
 
 ```bash
-curl -X GET "http://localhost:1337/api/audit-logs?contentType=api::article.article" \
+curl -X GET "http://localhost:1337/audit-logs/audit-logs?contentType=api::article.article" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -152,7 +152,7 @@ curl -X GET "http://localhost:1337/api/audit-logs?contentType=api::article.artic
 #### 3. Filter by Action Type
 
 ```bash
-curl -X GET "http://localhost:1337/api/audit-logs?action=create" \
+curl -X GET "http://localhost:1337/audit-logs/audit-logs?action=create" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -160,7 +160,7 @@ curl -X GET "http://localhost:1337/api/audit-logs?action=create" \
 #### 4. Filter by User
 
 ```bash
-curl -X GET "http://localhost:1337/api/audit-logs?userId=1" \
+curl -X GET "http://localhost:1337/audit-logs/audit-logs?userId=1" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -168,7 +168,7 @@ curl -X GET "http://localhost:1337/api/audit-logs?userId=1" \
 #### 5. Filter by Date Range
 
 ```bash
-curl -X GET "http://localhost:1337/api/audit-logs?startDate=2024-01-01&endDate=2024-12-31" \
+curl -X GET "http://localhost:1337/audit-logs/audit-logs?startDate=2024-01-01&endDate=2024-12-31" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -176,7 +176,7 @@ curl -X GET "http://localhost:1337/api/audit-logs?startDate=2024-01-01&endDate=2
 #### 6. Pagination and Sorting
 
 ```bash
-curl -X GET "http://localhost:1337/api/audit-logs?page=2&pageSize=50&sort=timestamp:desc" \
+curl -X GET "http://localhost:1337/audit-logs/audit-logs?page=2&pageSize=50&sort=timestamp:desc" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -184,7 +184,7 @@ curl -X GET "http://localhost:1337/api/audit-logs?page=2&pageSize=50&sort=timest
 #### 7. Combined Filters
 
 ```bash
-curl -X GET "http://localhost:1337/api/audit-logs?contentType=api::article.article&action=update&startDate=2024-01-01&page=1&pageSize=10" \
+curl -X GET "http://localhost:1337/audit-logs/audit-logs?contentType=api::article.article&action=update&startDate=2024-01-01&page=1&pageSize=10" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -192,7 +192,7 @@ curl -X GET "http://localhost:1337/api/audit-logs?contentType=api::article.artic
 #### 8. Get Single Audit Log
 
 ```bash
-curl -X GET http://localhost:1337/api/audit-logs/1 \
+curl -X GET http://localhost:1337/audit-logs/audit-logs/1 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -200,7 +200,7 @@ curl -X GET http://localhost:1337/api/audit-logs/1 \
 #### 9. Get Available Content Types
 
 ```bash
-curl -X GET http://localhost:1337/api/audit-logs/content-types \
+curl -X GET http://localhost:1337/audit-logs/audit-logs/content-types \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -225,7 +225,7 @@ curl -X GET http://localhost:1337/api/audit-logs/content-types \
 #### 10. Get Users with Audit Activity
 
 ```bash
-curl -X GET http://localhost:1337/api/audit-logs/users \
+curl -X GET http://localhost:1337/audit-logs/audit-logs/users \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -283,7 +283,7 @@ curl -X GET http://localhost:1337/api/audit-logs/users \
 4. **Check audit logs** to verify entries were created:
 
    ```bash
-   curl -X GET http://localhost:1337/api/audit-logs \
+   curl -X GET http://localhost:1337/audit-logs/audit-logs \
      -H "Authorization: Bearer YOUR_JWT_TOKEN"
    ```
 
@@ -306,7 +306,7 @@ curl -X GET http://localhost:1337/api/audit-logs/users \
 3. **Try to access audit logs** with that user's token:
 
    ```bash
-   curl -X GET http://localhost:1337/api/audit-logs \
+   curl -X GET http://localhost:1337/audit-logs/audit-logs \
      -H "Authorization: Bearer EDITOR_JWT_TOKEN"
    ```
 
@@ -356,12 +356,12 @@ curl -X GET http://localhost:1337/api/audit-logs/users \
 
 | Method | Endpoint                        | Description                   | Auth Required |
 | ------ | ------------------------------- | ----------------------------- | ------------- |
-| GET    | `/api/audit-logs`               | Get paginated audit logs      | Yes           |
-| GET    | `/api/audit-logs/:id`           | Get specific audit log        | Yes           |
-| GET    | `/api/audit-logs/content-types` | Get content types with logs   | Yes           |
-| GET    | `/api/audit-logs/users`         | Get users with audit activity | Yes           |
+| GET    | `/audit-logs/audit-logs`               | Get paginated audit logs      | Yes           |
+| GET    | `/audit-logs/audit-logs/:id`           | Get specific audit log        | Yes           |
+| GET    | `/audit-logs/audit-logs/content-types` | Get content types with logs   | Yes           |
+| GET    | `/audit-logs/audit-logs/users`         | Get users with audit activity | Yes           |
 
-### Query Parameters for `/api/audit-logs`
+### Query Parameters for `/audit-logs/audit-logs`
 
 | Parameter     | Type   | Description                                     | Example                |
 | ------------- | ------ | ----------------------------------------------- | ---------------------- |
@@ -414,7 +414,7 @@ For easier testing, you can use Postman:
 Example Postman request:
 
 ```
-GET {{baseUrl}}/api/audit-logs?contentType=api::article.article
+GET {{baseUrl}}/audit-logs/audit-logs?contentType=api::article.article
 Headers:
   Authorization: Bearer {{jwtToken}}
   Content-Type: application/json
