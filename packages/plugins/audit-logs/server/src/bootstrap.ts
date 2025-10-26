@@ -1,6 +1,11 @@
 import type { Core } from '@strapi/types';
 import { getService } from './utils';
 
+interface AuditLogsConfig {
+  enabled: boolean;
+  excludeContentTypes?: string[];
+}
+
 export default async ({ strapi }: { strapi: Core.Strapi }) => {
   strapi.log.info('🔍 Audit Logs Plugin - Bootstrap phase');
   strapi.log.info('🔍 Audit Logs Plugin - Routes registered');
@@ -17,7 +22,7 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
     }
 
     // Check if audit logging is enabled
-    const config = strapi.config.get('plugin.audit-logs', { enabled: true });
+    const config = strapi.config.get('plugin.audit-logs', { enabled: true }) as AuditLogsConfig;
     if (config.enabled === false) {
       return next();
     }
@@ -33,19 +38,33 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
 
     // Log the operation
     try {
+      // Extract record ID from result
+      let recordId = 'unknown';
+      if (typeof result === 'object' && result !== null && !Array.isArray(result)) {
+        recordId = String((result as any).id || (result as any).documentId || 'unknown');
+      }
+
+      // Extract user info from context (if available)
+      const contextWithState = context as any;
+      const userId = contextWithState.state?.user?.id;
+      const userEmail = contextWithState.state?.user?.email;
+      const userAgent = contextWithState.request?.headers?.['user-agent'];
+      const ipAddress = contextWithState.request?.ip;
+      const locale = contextWithState.locale;
+
       await auditLogService.logOperation({
         action,
         contentType: uid,
         contentTypeName: contentType.info.displayName || contentType.info.singularName,
-        recordId: String(result?.id || result?.documentId || 'unknown'),
-        userId: context.state?.user?.id,
-        userEmail: context.state?.user?.email,
+        recordId,
+        userId,
+        userEmail,
         timestamp: new Date(),
         changes: await auditLogService.getChanges(context, result, action),
         metadata: {
-          userAgent: context.request?.headers?.['user-agent'],
-          ipAddress: context.request?.ip,
-          locale: context.locale,
+          userAgent,
+          ipAddress,
+          locale,
         },
       });
     } catch (error) {

@@ -1,7 +1,7 @@
 import type { Core } from '@strapi/types';
 import { omit, isEqual } from 'lodash';
 
-interface AuditLogEntry {
+export interface AuditLogEntry {
   action: 'create' | 'update' | 'delete';
   contentType: string;
   contentTypeName: string;
@@ -13,14 +13,14 @@ interface AuditLogEntry {
   metadata?: any;
 }
 
-interface ChangesData {
+export interface ChangesData {
   before?: any;
   after?: any;
   fields?: string[];
 }
 
 class AuditLogService {
-  private strapi: Core.Strapi;
+  public strapi: Core.Strapi;
 
   constructor(strapi: Core.Strapi) {
     this.strapi = strapi;
@@ -57,18 +57,18 @@ class AuditLogService {
     return changes;
   }
 
-  private sanitizeData(data: any): any {
+  public sanitizeData(data: any): any {
     if (!data) return null;
 
     // Remove sensitive fields and system fields
     const sensitiveFields = ['password', 'token', 'secret', 'key', 'hash'];
     const systemFields = ['id', 'createdAt', 'updatedAt', 'publishedAt', 'createdBy', 'updatedBy'];
 
-    const sanitized = omit(data, [...sensitiveFields, ...systemFields]);
+    const sanitized = omit(data, [...sensitiveFields, ...systemFields]) as Record<string, any>;
 
     // Recursively sanitize nested objects
     if (typeof sanitized === 'object' && sanitized !== null) {
-      Object.keys(sanitized).forEach((key) => {
+      Object.keys(sanitized).forEach((key: string) => {
         if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
           sanitized[key] = this.sanitizeData(sanitized[key]);
         }
@@ -78,7 +78,7 @@ class AuditLogService {
     return sanitized;
   }
 
-  private getChangedFields(newData: any, result: any): string[] {
+  public getChangedFields(newData: any, result: any): string[] {
     if (!newData || !result) return [];
 
     const changedFields: string[] = [];
